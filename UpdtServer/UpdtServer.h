@@ -18,13 +18,17 @@ public:
     ~UpdtServer();
 
 private slots:
-    void acceptConnection();
+    void incomingConnection();
     void readClient();
 
 private:
-    Ui::UpdtServer *ui;
-    QTcpServer *tcpServer;
-    QTcpSocket *TcpReciever;
+    Ui::UpdtServer  *ui;
+    QTcpServer      *tcpServer;
+    QTcpSocket      *clientSocket;
+    quint64         nextBlockSize;
+    QString         version;
+    QByteArray      file1;
+    QByteArray      file2;
 };
 
 #endif // UPDTSERVER_H

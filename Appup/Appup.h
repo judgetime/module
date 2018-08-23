@@ -21,7 +21,9 @@ public:
     ~Appup();
 private slots:
     void disconnect();
-    void communicate();
+    void readDataSlot();
+    void on_pbn_connect_clicked();
+
 private:
     QTcpSocket *clientSocket;
     quint64 nextBlockSize;

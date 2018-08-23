@@ -8,20 +8,27 @@
 #include <QHostAddress>
 #include <QFile>
 #include <QByteArray>
+#include <QList>
 
-class Server : public QServer
+class Socket;
+
+class Server : public QTcpServer
 {
     Q_OBJECT
 
 public:
-    Server(QObject *parent = 0);
-    ~Server() {}
+    explicit Server(QObject *parent = 0);
+    ~Server();
+
 private slots:
-    void incomingConnection(int socketId);
+    virtual void incomingConnection(qintptr socketDescriptor);
+
 private:
-    QString     version;        //服务器上的最新版本
-    QByteArray  file1;       //保存客户端要更新的文件
-    QByteArray  file2;
+    quint64         nextBlockSize;
+    QString         version;
+    QByteArray      file1;
+    QByteArray      file2;
+    QList<Socket *> *clients;
 };
 
 #endif // SERVER_H

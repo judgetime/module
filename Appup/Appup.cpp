@@ -8,7 +8,7 @@ Appup::Appup(QWidget *parent)
 {
     ui->setupUi(this);
     //固定高和宽：
-    this->setFixedSize(400,200);
+    //this->setFixedSize(400,200);
     //设置背景颜色（两种方法都可以）
     //this->setStyleSheet("QMainWindow{background:rgb(240,250,250)}");
     QPalette pal;
@@ -38,25 +38,16 @@ Appup::Appup(QWidget *parent)
         ipAdd = stream.readLine();
         netfile.close();
     }
-    //连接到服务器
-    clientSocket=new QTcpSocket(0);
-    clientSocket->connectToHost("127.0.0.1",8080);
-    QObject::connect(clientSocket,SIGNAL(readyRead()),this,SLOT(communicate()));
-    QObject::connect(clientSocket,SIGNAL(disconnected()),this,SLOT(disconnect()));
+
 }
 Appup::~Appup()
 {
     delete ui;
 }
-void Appup::communicate()
+void Appup::readDataSlot()
 {
-//    DomDocument dom("update.xml");
-//    QString version;
-//    dom.readXml(version);
-//    qDebug() << version;
-
     QDataStream in(clientSocket);
-    in.setVersion(QDataStream::Qt_4_6);
+    in.setVersion(QDataStream::Qt_5_8);
     while(1) {
         //获取当前已经获取的数据的大小
         int bytes=(int)(clientSocket->bytesAvailable());
@@ -98,7 +89,7 @@ void Appup::communicate()
                 else {
                     QByteArray block;
                     QDataStream out(&block, QIODevice::WriteOnly);
-                    out.setVersion(QDataStream::Qt_4_6);
+                    out.setVersion(QDataStream::Qt_5_8);
                     out<<quint64(0)<<quint16(0x0001);
                     out.device()->seek(0);
                     out<<quint64(block.size() - sizeof(quint64));
@@ -145,4 +136,22 @@ void Appup::disconnect()
     clientSocket->deleteLater();
     QMessageBox::information(this,tr("错误"),tr("网络连接中断！"));
     qApp->quit();
+}
+
+void Appup::on_pbn_connect_clicked()
+{
+    //连接到服务器
+    clientSocket=new QTcpSocket(0);
+    clientSocket->connectToHost("127.0.0.1",8080);
+    QObject::connect(clientSocket,SIGNAL(readyRead()),this,SLOT(readDataSlot()));
+    QObject::connect(clientSocket,SIGNAL(disconnected()),this,SLOT(disconnect()));
+
+    //发送当前服务器上的客户端版本信息给升级客户端
+    QByteArray block; //用于暂存我们要发送的数据
+    QDataStream out(&block,QIODevice::WriteOnly);//使用数据流写入数据
+    out.setVersion(QDataStream::Qt_5_8);//设置数据流的版本，客户端和服务器端使用的版本要相同
+    out<<quint64(0)<<quint16(0x0001)<<version;//要发送的数据放到out
+    out.device()->seek(0);
+    out<<(quint16)(block.size()-sizeof(quint16));//要发送的数据放到out
+    clientSocket->write(block);
 }

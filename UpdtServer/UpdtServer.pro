@@ -27,19 +27,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        UpdtServer.cpp \
     DomDocument.cpp \
-    Thread.cpp \
     Widget.cpp \
-    Server.cpp
+    Server.cpp \
+    Socket.cpp
 
 HEADERS += \
-        UpdtServer.h \
     DomDocument.h \
-    Thread.h \
     Widget.h \
-    Server.h
+    Server.h \
+    Socket.h
 
 FORMS += \
-        UpdtServer.ui \
     Widget.ui

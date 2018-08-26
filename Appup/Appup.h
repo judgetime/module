@@ -24,6 +24,8 @@ private slots:
     void readDataSlot();
     void on_pbn_connect_clicked();
 
+    void on_pbn_Check_clicked();
+
 private:
     QTcpSocket *clientSocket;
     quint64 nextBlockSize;

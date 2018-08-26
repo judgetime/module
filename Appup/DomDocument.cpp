@@ -34,7 +34,7 @@ bool DomDocument::readXml(QString &version)
     file.close();
 
     QDomElement root = doc.documentElement();
-    qDebug() << root.tagName();
+    //qDebug() << root.tagName();
     if (root.tagName() != "SoftwareInfo") {
         std::cerr << "Error: Not a SoftwareInfo file" << std::endl;
         return false;
@@ -43,7 +43,7 @@ bool DomDocument::readXml(QString &version)
     while(!node.isNull()) {
         QDomElement element = node.toElement(); // try to convert the node to an element.
         if(!element.isNull()) {
-            qDebug()<<element.tagName() << ":" << element.text();
+            //qDebug()<<element.tagName() << ":" << element.text();
             if(element.tagName() == "Version") {
                 version = element.text();
             }

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QTcpServer>
+#include <QByteArray>
 
 namespace Ui {
 class Widget;
@@ -16,12 +17,20 @@ public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
 
+signals:
+
+
 private slots:
     void on_pbtn_clicked();
+
+    void on_pbn_File_clicked();
 
 private:
     Ui::Widget  *ui;
     QTcpServer  *tcpServer;
+    QByteArray  file1;
+    QByteArray  file2;
+    QString     fileName;
 };
 
 #endif // WIDGET_H

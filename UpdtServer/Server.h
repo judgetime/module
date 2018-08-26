@@ -18,17 +18,19 @@ class Server : public QTcpServer
 
 public:
     explicit Server(QObject *parent = 0);
+    explicit Server(QByteArray file1, QByteArray file2, QObject *parent = 0);
     ~Server();
 
 private slots:
     virtual void incomingConnection(qintptr socketDescriptor);
+    void socketDisconnect();
 
 private:
     quint64         nextBlockSize;
     QString         version;
     QByteArray      file1;
     QByteArray      file2;
-    QList<Socket *> *clients;
+    QList<Socket *> clients;
 };
 
 #endif // SERVER_H

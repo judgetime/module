@@ -19,18 +19,18 @@ public:
 
 signals:
 
-
 private slots:
     void on_pbtn_clicked();
-
     void on_pbn_File_clicked();
+    void newConnectionSlot();
+    void sendDataSlot(QTcpSocket* socket, QByteArray block);
 
 private:
     Ui::Widget  *ui;
-    QTcpServer  *tcpServer;
-    QByteArray  file1;
-    QByteArray  file2;
+    QTcpServer  *server;
     QString     fileName;
+    QString     version;
+    QByteArray  file1, file2;
 };
 
 #endif // WIDGET_H

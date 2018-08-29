@@ -2,6 +2,7 @@
 #include "ui_Appup.h"
 #include "DomDocument.h"
 #include <QFileDialog>
+#include <QHostAddress>
 
 Appup::Appup(QWidget *parent)
     : QDialog(parent),
@@ -177,16 +178,18 @@ void Appup::on_pbn_connect_clicked()
         clientSocket= new QTcpSocket(this);
         //取消已有的连接
         clientSocket->abort();
-        clientSocket->connectToHost(ip,port);
+        clientSocket->connectToHost(QHostAddress::LocalHost,port);
         //等待连接成功
         if(!clientSocket->waitForConnected(30000)) {
             ui->textEdit->append("连接服务器失败！");
             return;
+        }else{
+            ui->textEdit->append("连接服务器成功！");
+            qDebug() << "连接服务器。。。";
+            ui->pbn_connect->setText("断开连接");
+            QObject::connect(clientSocket,SIGNAL(readyRead()),this,SLOT(readDataSlot()));
+            QObject::connect(clientSocket,SIGNAL(disconnected()),this,SLOT(disconnect()));
         }
-        ui->textEdit->append("连接服务器成功！");
-        ui->pbn_connect->setText("断开连接");
-        QObject::connect(clientSocket,SIGNAL(readyRead()),this,SLOT(readDataSlot()));
-        QObject::connect(clientSocket,SIGNAL(disconnected()),this,SLOT(disconnect()));
     }else{
         //如果正在连接（点击侦听后立即取消侦听，若socket没有指定对象会有异常）
         if(clientSocket->state() == QAbstractSocket::ConnectedState) {

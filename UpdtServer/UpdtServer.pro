@@ -29,14 +29,14 @@ SOURCES += \
         main.cpp \
     DomDocument.cpp \
     Widget.cpp \
-    Server.cpp \
-    Socket.cpp
+    Sockethandle.cpp \
+    SocketManager.cpp
 
 HEADERS += \
     DomDocument.h \
     Widget.h \
-    Server.h \
-    Socket.h
+    Sockethandle.h \
+    SocketManager.h
 
 FORMS += \
     Widget.ui

@@ -47,6 +47,8 @@ void Sockethandle::readyReadSlot()
         qDebug() << "server:protocol:" << QString::number(protocol,16);
         switch (protocol) {
         case 0x0001:{
+            QString str;
+            in >> str;
             //发送当前服务器上的客户端版本信息给升级客户端
             QByteArray block = 0; //用于暂存我们要发送的数据
             QDataStream out(&block,QIODevice::WriteOnly);//使用数据流写入数据

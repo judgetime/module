@@ -45,6 +45,7 @@ void Appup::readDataSlot()
       return;
     }
     qDebug() << "收到服务器响应...";
+    nextBlockSize = 0;
     QDataStream in(clientSocket);
     in.setVersion(QDataStream::Qt_5_8);
     //while(1) {
@@ -151,7 +152,6 @@ void Appup::readDataSlot()
                 return;
             }
         }
-        nextBlockSize = 0;
     //}
 }
 void Appup::disconnect()

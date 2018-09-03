@@ -1,16 +1,12 @@
 #ifndef APPUP_H
 #define APPUP_H
 #include <QDialog>
-#include <QMessageBox>
-#include <QFile>
-#include <QTcpSocket>
-#include <QDataStream>
-#include <QProcess>
-#include <QDatetime>
 
 namespace Ui {
 class Appup;
 }
+
+class QTcpSocket;
 
 class Appup : public QDialog
 {
@@ -19,19 +15,23 @@ class Appup : public QDialog
 public:
     explicit Appup(QWidget *parent = 0);
     ~Appup();
+    void createFileTemp();
+    bool progressHandle();
 private slots:
+    void on_pbn_connect_clicked();
+    void on_pbn_checkServerVersion_clicked();
     void disconnect();
     void readDataSlot();
-    void on_pbn_connect_clicked();
-
-    void on_pbn_Check_clicked();
+    void on_pbn_checkLocalVersion_clicked();
 
 private:
-    QTcpSocket *clientSocket;
-    quint64 nextBlockSize;
-    QString version,version_s;
-    int bytesWritten;
-    Ui::Appup *ui;
+    Ui::Appup*  ui;
+    QTcpSocket* clientSocket;
+    QString     version;        //版本
+    QString     appName;        //程序名
+    QString     updater;        //update.xml
+    int         bytesWritten;
+    quint64     nextBlockSize;
 };
 
 #endif // APPUP_H

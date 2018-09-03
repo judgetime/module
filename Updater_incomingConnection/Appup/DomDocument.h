@@ -13,7 +13,8 @@ class DomDocument
 public:
     DomDocument(QString fileName);
     ~DomDocument();
-    bool readXml(QString &version);
+    bool readVersion(QString &);
+    bool readAppName(QString &);
 
 private:
     QString fileName;

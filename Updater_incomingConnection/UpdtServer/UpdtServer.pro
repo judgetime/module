@@ -30,13 +30,15 @@ SOURCES += \
     DomDocument.cpp \
     Widget.cpp \
     Server.cpp \
-    Socket.cpp
+    Socket.cpp \
+    SocketHandle.cpp
 
 HEADERS += \
     DomDocument.h \
     Widget.h \
     Server.h \
-    Socket.h
+    Socket.h \
+    SocketHandle.h
 
 FORMS += \
     Widget.ui

@@ -17,11 +17,16 @@ public:
     ~Widget();
 
 private slots:
-    void on_pbtn_clicked();
+    void on_pbn_OpenFile_clicked();
+
+    void on_pbn_Listen_clicked();
 
 private:
     Ui::Widget  *ui;
-    QTcpServer  *tcpServer;
+    QTcpServer  *server;
+    QString     fileName;
+    QString     version;
+    QByteArray  file1, file2;
 };
 
 #endif // WIDGET_H

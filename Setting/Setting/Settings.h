@@ -1,3 +1,6 @@
+/*
+ * 配置文件读取和写入类
+ */
 #pragma once
 #include <map>
 #include <string>

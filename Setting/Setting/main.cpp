@@ -1,16 +1,16 @@
 #include <iostream>
 #include "Settings.h"
+#include "Logger.h"
 
 using namespace settingsSpace;
+
 int main(int argc, char **argv)
 {
-	Settings *s = Settings::getIntance();
-	s->setValue("1/1.1", "a");
-	s->setValue("1/1.2", "a");
-	s->setValue("2/2.1", "a");
-	s->setValue("0.1", "a");
-
-	cout << "1"<<s->value("1/1.1")<<"2" << s->value("1/1.2")<<"3" << s->value("2/2.1")<<"4" << s->value("0.1")<<endl;
+	loggerSpace::Logger *l = loggerSpace::Logger::getInstance();
+	l->setOutputFile(true);
+	string s("--");
+	l->logPrint("abc %s %s \n", "bcd", s.c_str());
+	
 	system("pause");
 	return 0;
 }
